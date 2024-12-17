@@ -14,18 +14,18 @@ function logged(): bool
 
 function addNewCoupon(PDO &$db, string $serial, string $fullname, bool $used): bool
 {
-    $sql = "INSERT INTO `coupons` (`serial`, `fullname`, `used`) VALUES (?, ?, ?);";
+    $sql = "INSERT INTO `coupons` (`serial`, `fullname`, `used`, `created_time`) VALUES (?, ?, ?, ?);";
     $stmt = $db->prepare($sql);
 
-    return $stmt->execute([$serial, $fullname, $used ? 1 : 0]);
+    return $stmt->execute([$serial, $fullname, $used ? 1 : 0, time()]);
 }
 
 function updateCouponName(PDO &$db, string $serial, string $fullname): bool
 {
-    $sql = "UPDATE `coupons` SET `fullname` = ? WHERE `serial` = ?;";
+    $sql = "UPDATE `coupons` SET `fullname` = ?, `last_update_time` = ? WHERE `serial` = ?;";
     $stmt = $db->prepare($sql);
 
-    return $stmt->execute([$fullname, $serial]);
+    return $stmt->execute([$fullname, time(), $serial]);
 }
 
 function addCouponIfIsNew(PDO &$db, string $serial, string $fullname, bool $used = false): bool
@@ -51,7 +51,7 @@ function getCurrentAdmin(PDO &$db): ?array
 
     $admin_id = $_SESSION["login_id"];
 
-    $sql = "SELECT * FROM `admin` WHERE `id` = ?;";
+    $sql = "SELECT * FROM `admins` WHERE `id` = ?;";
     $stmt = $db->prepare($sql);
     $stmt->execute([$admin_id]);
     $admin = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -61,7 +61,7 @@ function getCurrentAdmin(PDO &$db): ?array
 
 function changeAdminUsernameById(PDO &$db, int $admin_id, string $new_username): bool
 {
-    $sql = "UPDATE `admin` SET `username` = ? WHERE `admin`.`id` = ?;";
+    $sql = "UPDATE `admins` SET `username` = ? WHERE `admins`.`id` = ?;";
     $stmt = $db->prepare($sql);
     
     return $stmt->execute([$new_username, $admin_id]);
@@ -69,7 +69,7 @@ function changeAdminUsernameById(PDO &$db, int $admin_id, string $new_username):
 
 function changeAdminPasswordById(PDO &$db, int $admin_id, string $new_password): bool
 {
-    $sql = "UPDATE `admin` SET `password` = ? WHERE `admin`.`id` = ?;";
+    $sql = "UPDATE `admins` SET `password` = ? WHERE `admins`.`id` = ?;";
     $stmt = $db->prepare($sql);
 
     $new_password = md5($new_password);
@@ -285,7 +285,7 @@ Flight::route("POST /login", function() {
     $username = $_POST["username"];
     $password = md5($_POST["password"]);
 
-    $sql = "SELECT * FROM `admin` WHERE `username` = ? AND `password` = ?;";
+    $sql = "SELECT * FROM `admins` WHERE `username` = ? AND `password` = ?;";
     $stmt = $db->prepare($sql);
     $stmt->execute([$username, $password]);
     $admin = $stmt->fetch(PDO::FETCH_ASSOC);

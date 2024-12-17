@@ -28,6 +28,8 @@
             <th>Serial</th>
             <th>Full Name</th>
             <th>Used</th>
+            <th>Created time</th>
+            <th>Last update time</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -50,6 +52,8 @@
             <td><?= htmlspecialchars($item['serial']) ?></td>
             <td><?= htmlspecialchars($item['fullname']) ?></td>
             <td><span class="badge <?= $badgeColor ?>"><?= $badgeText ?></span></td>
+            <td><?= date('Y-m-d H:i:s', $item['created_time']) ?></td>
+            <td><?= $item['last_update_time'] ? date('Y-m-d H:i:s', $item['last_update_time']) : 'Not updated' ?></td>
             <td>
                 <a href="/update-coupon/<?= $item["id"] ?>" class="btn btn-sm btn-primary">Edit</a>
                 <a href="/delete-coupon/<?= $item["id"] ?>" 
