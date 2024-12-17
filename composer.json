@@ -1,0 +1,6 @@
+{
+    "require": {
+        "flightphp/core": "^3.13",
+        "phpoffice/phpspreadsheet": "^3.6"
+    }
+}
