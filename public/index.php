@@ -184,6 +184,10 @@ Flight::route("POST /import-coupons", function() {
         }
     }
 
+    if ($upload_file && file_exists($upload_file)) {
+        unlink($upload_file);
+    }
+
     Flight::render("import_coupons", $params);
 });
 
