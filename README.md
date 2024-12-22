@@ -48,7 +48,7 @@ composer install
 
 Create a new database in MySQL.
 
-Import the provided `ben_shopping.sql` file (located in the database/ folder) to set up the required tables.
+Import the provided `ben_shopping.sql` file (located in the `database/` folder) to set up the required tables.
 
 Example command:
 
