@@ -32,8 +32,8 @@ A simple PHP-based portal to manage serial numbers (codes) for products with two
 1. Clone the Repository
 
 ```bash
-git clone https://github.com/BaseMax/ben-shopping.git
-cd ben-shopping
+git clone https://github.com/BaseMax/ben-shopping-portal.git
+cd ben-shopping-portal
 ```
 
 2. Install Dependencies
@@ -78,7 +78,7 @@ Ensure that your web server is configured to serve PHP files.
 Once everything is set up, navigate to your portal in a web browser:
 
 ```
-http://localhost/ben-shopping/
+http://localhost/ben-shopping-portal/
 ```
 
 7. Login
